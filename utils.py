@@ -40,9 +40,11 @@ def get_saliency(model,ref,class_of_interest,model_imsize,last_spatial_layer):
     #import pdb; pdb.set_trace() 
     print(f'L_c_np max : {L_c_np.max()}')
 
-    L_c_np = L_c_np/(L_c_np.max((1,2))[:, np.newaxis, np.newaxis] + sys.float_info.epsilon)   #[:,None,None]
+    if L_c_np.max() != 0:
+      L_c_np = L_c_np/(L_c_np.max((1,2))[:, np.newaxis, np.newaxis]) # + sys.float_info.epsilon)   #[:,None,None]
     
     #import pdb; pdb.set_trace()
+
 
     heat_map = list(map(lambda t:transform.resize((t*255.).astype(np.uint8),model_imsize),L_c_np))
     heat_map = np.array(heat_map)
