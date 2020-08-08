@@ -9,7 +9,7 @@ import sys
 
 tensor_to_numpy = lambda t:t.detach().cpu().numpy()
 
-def get_saliency_updated(model, refs, categories, model_imsize, last_spatial_layer):
+def get_saliency(model, refs, categories, model_imsize, last_spatial_layer):
     
     refs_scores = model(refs)
 
