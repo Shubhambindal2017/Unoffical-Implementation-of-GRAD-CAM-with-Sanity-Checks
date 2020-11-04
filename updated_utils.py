@@ -28,11 +28,7 @@ def get_saliency(model, refs, categories, model_imsize, last_spatial_layer):
         gradcam_loss = torch.add(gradcam_loss, refs_scores[img_num ,class_of_interest])
 
       img_num += 1
-    
-    #gradcam_loss = torch.sum(ref_scores[:,class_of_interest])
-    
-    #import pdb; pdb.set_trace()
-    #print(gradcam_loss)
+
     gradcam_loss.backward()
 
     Z = 1.
@@ -40,39 +36,18 @@ def get_saliency(model, refs, categories, model_imsize, last_spatial_layer):
     if True:
         alpha_c_k = (1/Z) * torch.sum(last_spatial_layer.our_grad_out,(2,3))
 
-
-    #print(last_spatial_layer.our_grad_out.shape)
-    #print(alpha_c_k.shape)
-
     alpha_into_A = alpha_c_k.unsqueeze(-1).unsqueeze(-1) * last_spatial_layer.our_feats
-    #print(alpha_c_k.unsqueeze(-1).unsqueeze(-1).shape)
-    #print(last_spatial_layer.our_feats.shape)
-    #print(alpha_into_A.shape)
-    
+
     alpha_into_A_channelsum = torch.sum(alpha_into_A,1)
-    #print(alpha_into_A_channelsum.shape)
-
     L_c = torch.nn.functional.relu(alpha_into_A_channelsum)
-#     print(L_c.shape)
 
-
-    #import pdb; pdb.set_trace()
     L_c_np = tensor_to_numpy(L_c)
 
-    #import pdb; pdb.set_trace() 
-    #print(f'L_c_np max : ')
-    #print(L_c_np.max(1,2))
-
-    #if L_c_np.max() != 0:
     L_c_np = L_c_np/(L_c_np.max((1,2))[:, np.newaxis, np.newaxis] + sys.float_info.epsilon)  #[:,None,None]
-    
-    #import pdb; pdb.set_trace()
-
 
     heat_map = list(map(lambda t:transform.resize((t*255.).astype(np.uint8),model_imsize),L_c_np))
     heat_map = np.array(heat_map)
-    #TODO why did i transpose
-    #print(heat_map.shape)
+
 
     
     return L_c_np,heat_map,refs_scores
@@ -84,11 +59,6 @@ def batch_overlay(heat_maps,ims, model_imsize):
     heat_map_jet = np.array(heat_map_jet)[:,:,:,:3]
     # heat_map_jet = np.transpose(heat_map_jet, (2,0,1,3))
     heat_map_jet_pil = list(map(lambda t: Image.fromarray(np.uint8(t*255)), heat_map_jet))
-
-    #heat_map_jet_pil = Image.fromarray(np.uint8(heat_map))
-    #heat_map_jet.shape
-    
-    #import pdb; pdb.set_trace()
 
     saliency_overlayed = []
     for im_i,h in zip(ims,heat_map_jet_pil):
