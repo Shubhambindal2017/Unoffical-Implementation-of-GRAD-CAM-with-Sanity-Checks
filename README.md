@@ -1,6 +1,6 @@
 # Unofficial Implementation of GRAD CAM with Sanity Checks
 
-In today's world, it’s very important that we should know on which part of the input our model is focusing while making its decision, especially when we are talking about self-driving cars or similar applications. There are some previous research works which claim to do this task one of them is 'Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization' in this the authors proposed 2 techniques GRAD-CAM and Guided GRAD-CAM. GRAD-CAM is a technique that generates visual explanations for any CNN-based network without requiring architectural changes or re-training by using the gradient information flowing into the last convolutional layer of the CNN to assign importance values to each neuron for a particular decision of interest (i.e. for a given input class), while Guided GRAD-CAM which is the pointwise multiplication of the GRAD-CAM's output heatmap with Guided Backpropagation [Striving for Simplicity: The All Convolutional Net], to get visualizations which are both high-resolution and concept-specific, but then 'Sanity Checks for Saliency Maps', performed sanity checks on some of the approaches which produce saliency maps and showed that Guided Backpropagation didn't pass the checks and so as the Guided GRAD-CAM, while GRAD-CAM passes its checks.
+In today's world, itâ€™s very important that we should know on which part of the input our model is focusing while making its decision, especially when we are talking about self-driving cars or similar applications. There are some previous research works which claim to do this task one of them is 'Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization' in this the authors proposed 2 techniques GRAD-CAM and Guided GRAD-CAM. GRAD-CAM is a technique that generates visual explanations for any CNN-based network without requiring architectural changes or re-training by using the gradient information flowing into the last convolutional layer of the CNN to assign importance values to each neuron for a particular decision of interest (i.e. for a given input class), while Guided GRAD-CAM which is the pointwise multiplication of the GRAD-CAM's output heatmap with Guided Backpropagation [Striving for Simplicity: The All Convolutional Net], to get visualizations which are both high-resolution and concept-specific, but then 'Sanity Checks for Saliency Maps', performed sanity checks on some of the approaches which produce saliency maps and showed that Guided Backpropagation didn't pass the checks and so as the Guided GRAD-CAM, while GRAD-CAM passes its checks.
 
 ### Files
 
@@ -31,6 +31,7 @@ Now instead of just a single image, I performed GRAD-CAM sanity checks on 50 ran
 
 ### References
 
+```
 @article{DBLP:journals/corr/SelvarajuDVCPB16,
   author    = {Ramprasaath R. Selvaraju and Abhishek Das and Ramakrishna Vedantam and Michael Cogswell and Devi Parikh and Dhruv Batra},
   title     = {Grad-CAM: Why did you say that? Visual Explanations from Deep Networks via Gradient-based Localization},
@@ -39,7 +40,8 @@ Now instead of just a single image, I performed GRAD-CAM sanity checks on 50 ran
   year      = {2016},
   url       = {http://arxiv.org/abs/1610.02391},
 }
-
+```
+```
 @article{DBLP:journals/corr/abs-1810-03292,
   author    = {Julius Adebayo and Justin Gilmer and Michael Muelly and
                Ian J. Goodfellow and Moritz Hardt and Been Kim},
@@ -49,4 +51,4 @@ Now instead of just a single image, I performed GRAD-CAM sanity checks on 50 ran
   year      = {2018},
   url       = {http://arxiv.org/abs/1810.03292},
 }
-
+```
